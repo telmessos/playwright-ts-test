@@ -76,3 +76,55 @@ Note: If you encounter any build issues, make sure you have:
 - Node.js version compatible with Angular 14
 - All the required dependencies listed in package.json
 - Proper Angular CLI version (^14.2.10)
+
+
+### Install Playwright browsers:
+   ```bash
+   npx playwright install
+   ```
+
+### Running Tests
+You can run tests in different ways:
+
+1. Run all tests in all browsers:
+   ```bash
+   npx playwright test
+   ```
+
+2. Run tests in a specific browser:
+   ```bash
+   # Run in Chrome
+   npx playwright test --project="Google Chrome"
+   
+   # Run in Firefox
+   npx playwright test --project="Firefox"
+   
+   # Run in Edge
+   npx playwright test --project="Microsoft Edge"
+   ```
+
+3. Run tests in headed mode (with browser UI):
+   ```bash
+   npx playwright test --headed
+   ```
+
+4. Run a specific test file:
+   ```bash
+   npx playwright test tests/specs/forms.spec.ts
+   ```
+
+5. Run tests in debug mode:
+   ```bash
+   npx playwright test --debug
+   ```
+
+### Viewing Test Reports
+After running tests, you can view the HTML report:
+```bash
+npx playwright show-report
+```
+
+### Additional Options
+- Run tests in parallel: `npx playwright test --workers=4`
+- Run tests with retries: `npx playwright test --retries=2`
+- Run tests in specific directory: `npx playwright test tests/specs/`
