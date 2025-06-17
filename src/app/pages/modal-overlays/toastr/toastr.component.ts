@@ -27,7 +27,7 @@ export class ToastrComponent {
   status: NbComponentStatus = 'primary';
 
   title = 'HI there!';
-  content = `I'm cool toaster!`;
+  content = 'I\'m cool toaster!';
 
   types: NbComponentStatus[] = [
     'primary',
