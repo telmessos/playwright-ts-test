@@ -27,6 +27,7 @@ export class IotDashboardPage extends CommonPage {
      */
     async navigateToIotDashboard(): Promise<void> {
         await this.navigateTo(`${this.APP_URL}${this.PAGE_URL}`);
+        await this.expandSidebarIfCollapsed();
     }
 
     /**

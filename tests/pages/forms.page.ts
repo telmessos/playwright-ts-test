@@ -26,6 +26,7 @@ export class FormsPage extends CommonPage {
     async navigateToFormLayouts(): Promise<void> {
         // Navigate to the base URL first
         await this.navigateTo(this.APP_URL);
+        await this.expandSidebarIfCollapsed();
         // Click on the 'Forms' main menu item
         await this.clickMenuItem("Forms");
         // Click on the 'Form Layouts' sub-menu item

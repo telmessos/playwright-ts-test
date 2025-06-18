@@ -29,10 +29,18 @@ export class CommonPage {
     }
 
     /**
-     * Wait for the page to be loaded
+     * Wait for the page to be loaded, including network idle, Pace progress bar, and optionally a key element.
+     * @param keySelector - Optional selector for a key element that should be visible when the page is ready
      */
-    async waitForPageLoad(): Promise<void> {
+    async waitForPageLoad(keySelector?: string): Promise<void> {
+        // Wait for the network to be idle (no ongoing network requests)
         await this.page.waitForLoadState('networkidle');
+        // Wait for the Pace progress bar at the top to disappear (ensures loading bar is gone)
+        await this.page.waitForSelector('.pace.pace-active', { state: 'detached', timeout: 10000 });
+        // If a keySelector is provided, wait for that specific element to be visible (ensures page content is ready)
+        if (keySelector) {
+            await this.page.waitForSelector(keySelector, { state: 'visible', timeout: 10000 });
+        }
     }
 
     /**
@@ -83,5 +91,21 @@ export class CommonPage {
         const menuItem = this.page.locator(`a:has-text("${menuTitle}")`);
         const ariaExpanded = await menuItem.getAttribute('aria-expanded');
         return ariaExpanded === 'true';
+    }
+
+    /**
+     * Expand the sidebar if it is collapsed
+     */
+    async expandSidebarIfCollapsed(): Promise<void> {
+        const sidebar = this.page.locator('nb-sidebar');
+        const isCollapsed = await sidebar.evaluate((el) => el.classList.contains('collapsed'));
+        if (isCollapsed) {
+            await this.page.locator(this.menuToggle).click();
+            // Wait for the sidebar to expand (wait for class to be removed)
+            await this.page.waitForFunction(() => {
+                const el = document.querySelector('nb-sidebar');
+                return el && !el.classList.contains('collapsed');
+            });
+        }
     }
 } 
